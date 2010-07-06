@@ -17,7 +17,8 @@ class Scanner
        @commits = []
        @commit_ct = 0
        @which = which
-       raise "cannot execute /usr/bin/git" unless File.executable?("/usr/bin/git")
+       git_cmd = %x(which git).strip
+       raise "cannot execute /usr/bin/git" unless File.executable?(git_cmd)
        raise "#{repo} is not a git repo" unless File.directory?("#{repo}/.git")
        Dir.chdir(@repo) do 
            puts "scanning..." if @@options.verbose
